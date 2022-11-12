@@ -1,0 +1,87 @@
+
+/*--------*/
+
+USE MyGuitarShop
+GO
+
+SELECT [ListPrice], [ProductCode], [ProductName], [DiscountPercent]
+FROM Products 
+ORDER BY [ListPrice]
+DESC;
+
+/*-------*/
+
+USE MyGuitarShop
+GO
+
+SELECT [ProductName], [ListPrice], [DateAdded]
+FROM Products 
+WHERE [ListPrice] BETWEEN 500 AND 2000
+ORDER BY [ListPrice]
+DESC;
+
+/*-------*/
+
+USE MyGuitarShop
+GO
+
+SELECT [OrderID], [OrderDate], [ShipDate]
+FROM Orders
+WHERE [ShipDate] IS NULL;
+
+/*---------*/
+
+USE MyGuitarShop
+GO
+
+
+SELECT c.FirstName,c.LastName,a.Line1,a.City,a.State,a.ZipCode
+FROM Customers c JOIN Addresses a on c.CustomerID = a.CustomerID
+WHERE a.AddressID = c.ShippingAddressID;
+
+
+
+
+
+
+/*------*/
+
+USE MyGuitarShop
+GO
+
+
+SELECT p.ProductName, p.ListPrice
+FROM Products p JOIN Products l ON p.ProductID != l.ProductID
+AND p.ListPrice = l.ListPrice
+ORDER BY p.ProductName
+ASC;
+
+
+/*------------------*/
+
+USE MyGuitarShop
+GO
+
+
+SELECT c.CategoryName, p.ProductID
+FROM Categories c LEFT JOIN Products p ON c.CategoryID = p.CategoryID
+WHERE p.ProductID IS NULL;
+
+
+/*-----------*/
+
+USE MyGuitarShop
+GO
+
+
+SELECT 'SHIPPED' AS ShipDate, OrderID, OrderDate
+FROM Orders
+WHERE ShipDate IS NOT NULL
+
+UNION
+
+SELECT 'NOT SHIPPED' AS ShipDate, OrderID, OrderDate
+FROM Orders
+WHERE ShipDate IS NULL
+ORDER BY OrderDate
+ASC;
